@@ -3,10 +3,11 @@ import axios from "axios";
 import Form from "./Form"
 import "./App.css";
 import { todos } from "./data";
-import {FaEdit, FaTrash} from "react-icons/fa"
+import { FaEdit, FaTrash, FaPlusSquare, FaBars, FaLessThan } from "react-icons/fa"
 
 function App() {
   const [show, setShow] = useState(false)
+  const date = new Date().toDateString()
   const fetchTodo = async (e) => {
     if (e) e.preventDefault();
     try {
@@ -25,21 +26,36 @@ function App() {
 
   return (
 
-    <div className="flex items-center flex-col">
-      <div className="flex justify-between py-3 px-4 w-[60%] h-14 rounded-full bg-gray-400 items-center mt-6">
-        <div className="font-bold text-xl text-white">ToDo</div>
-        <div className="py-1 px-2 bg-gray-100 rounded-full font-bold text-gray-400 cursor-pointer" onClick={() => setShow(true)}> + Add todo</div>
-      </div>
-
-      <div className="border border-gray-400 w-[60%] rounded-xl mt-8 p-4">
-        <h2 className="text-center font-medium text-xl">All Todo</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div className="flex justify-center items-center flex-col">
+      <div className="min-h-screen bg-gray-200 w-full">
+        <div className="bg-blue-800 px-4 pt-6 pb-8 rounded-br-[120px] ">
+          <div className="flex justify-between text-3xl text-white pb-6">
+            <FaBars />
+            <FaLessThan className="mr-4" />
+          </div>
+          <h3 className="font-bold text-2xl text-white">Today : {date}</h3>
+          <p className="text-white pb-6">1 of 6 items</p>
+        </div>
+        <div className="flex p-4 justify-between items-center">
+          <div className="text-gray-500">
+            <p className="font-medium">Add a new item...</p>
+            <p>Date and time</p>
+            <p>Category</p>
+          </div>
+          <div className="mr-4"><FaPlusSquare className="text-2xl text-white bg-gray-600" /></div>
+        </div>
+        {/* All items */}
+        <div>
           {todos.map((todo) => (
-            <div className="border border-gray-400 rounded-xl p-4 mt-4">
-              <h3 className="font-bold">{todo.name}</h3>
-              <div>{todo.description}</div>
-              <div className="text-sm text-gray-400">{todo.status}</div>
-              <div className="flex justify-between items-center mt-2"><FaEdit className="text-blue-500" /><FaTrash className="text-red-500" /></div>
+            <div className="flex justify-between items-center m-2 bg-gray-100 p-1">
+              <div>
+                <div className="text-xl font-medium">{todo.name}</div>
+              <div className="text-sm ">{todo.status}</div>
+              </div>
+              <div className="flex text-md gap-2">
+                <FaEdit className="text-blue-500" />
+                <FaTrash className="text-red-500" />
+              </div>
             </div>
           ))}
         </div>
