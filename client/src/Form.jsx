@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import "./App.css";
+import { FaBars, FaLessThan} from "react-icons/fa"
 
 function Form({ onClose }) {
   const [todo, setTodo] = useState({ name: "", description: "", status: "" });
@@ -21,45 +22,41 @@ function Form({ onClose }) {
     }
   };
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-      <div className="w-full max-w-md rounded-xl bg-white p-6 shadow-xl">
-        <form onSubmit={handleSubmit} className="">
-          <div className="flex justify-between mb-6">
-            <h2 className="font-bold text-gray-400 text-xl">Add todo</h2>
-            <button
-              onClick={onClose}
-              className="font-bold cursor-pointer text-red-700 hover:text-red-500 "
-            >
-              ✕
-            </button>
-          </div>
-          {success && <div className="p-2 text-green-600 bg-green-200 rounded-md text-center">{success}</div>}
-          {error && <div className="p-2 text-red-600 bg-red-200 rounded-md text-center">{error}</div>}
-          <input
-            type="text"
-            name="name"
-            onChange={handleChange}
-            value={todo.name}
-            className="w-full outline-none p-2 border border-gray-400 rounded-md mb-4 mt-4"
-            placeholder="Enter name .."
-          />
-          <input
-            type="text"
-            name="description"
-            onChange={handleChange}
-            value={todo.description}
-            className="w-full outline-none p-2 border border-gray-400 rounded-md mb-4"
-            placeholder="Enter description .."
-          />
-          <select onChange={handleChange} name="status" className="w-full outline-none p-2  border border-gray-400 rounded-md mb-4" value={todo.status}>
-            <option value="">Select status</option>
-            <option value="completed">completed</option>
-            <option value="not-started">not started</option>
-            <option value="in-progress">in progress</option>
+    <div className="flex md:flex-col md:justify-center items-center min-h-screen">
+      {/* contianer */}
+      <div className="bg-gray-200 w-64">
+        <div className="bg-blue-800 text-white pt-6 h-48 md:h-36 rounded-b-[150px]">
+        <div className="flex justify-between px-6 md:text-xl text-3xl">
+          <FaBars />
+          <FaLessThan />
+        </div>
+        <div className="text-center text-3xl md:text-xl pt-16 md:pt-10 font-bold">New Task</div>
+      </div>
+
+      <div>
+        <form action="" className="flex flex-col items-center mt-6 p-4">
+          {/* description */}
+          <textarea type="text" placeholder="Add a description..." className="w-full h-14 p-1 mb-3 outline-none ring ring-gray-300 focus:ring-blue-500 rounded-md" />
+          {/* category */}
+          <select name="" id="" className="w-full p-1 mb-3 outline-none ring ring-gray-300 rounded-md" >
+            <option value="">Category</option>
+            <option value="">cat1</option>
+            <option value="">cat2</option>
+            <option value="">cat3</option>
           </select>
-          <button type="submit" className="w-full hover:bg-gray-400 hover:text-white cursor-pointer p-2 border border-gray-400 rounded-md" >Submit</button>
+
+          {/* date */}
+          <input type="date" placeholder="Add a description..." className="w-full p-1 mb-3 outline-none ring ring-gray-300 rounded-md" />
+          {/* time */}
+          <input type="time" placeholder="Add a description..." className="w-full p-1 mb-3 outline-none ring ring-gray-300 rounded-md" />
+          {/* important */}
+          <p className="flex justify-between w-full border border-gray-300 p-1 rounded-md mb-3"><div>Important</div> <input type="checkbox" name="" id="" /></p>
+
+          <button className="bg-blue-800 w-24 p-2 rounded-full text-white">Done</button>
         </form>
       </div>
+      </div>
+      
     </div>
   );
 }
