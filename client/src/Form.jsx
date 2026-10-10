@@ -22,15 +22,15 @@ function Form({ onClose }) {
     }
   };
   return (
-    <div className="flex md:flex-col md:justify-center items-center min-h-screen">
+    <div className="md:flex md:flex-col md:justify-center items-center min-h-screen">
       {/* contianer */}
-      <div className="bg-gray-200 w-64">
-        <div className="bg-blue-800 text-white pt-6 h-48 md:h-36 rounded-b-[150px]">
-        <div className="flex justify-between px-6 md:text-xl text-3xl">
+      <div className="w-full md:w-72 p-0 min-h-screen md:min-h-0 bg-gray-200 w-64">
+        <div className="bg-blue-800 text-white pt-6 h-42 md:h-36 rounded-b-[150px]">
+        <div className="flex justify-between px-6 text-xl md:text-2xl">
           <FaBars />
           <FaLessThan />
         </div>
-        <div className="text-center text-3xl md:text-xl pt-16 md:pt-10 font-bold">New Task</div>
+        <div className="text-center text-xl md:text-3xl md:text-xl pt-16 md:pt-10 font-bold">New Task</div>
       </div>
 
       <div>
