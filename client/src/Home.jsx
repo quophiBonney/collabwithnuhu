@@ -4,9 +4,11 @@ import Form from "./Form"
 import "./App.css";
 import { todos } from "./data";
 import { FaEdit, FaTrash, FaPlusSquare, FaBars, FaLessThan } from "react-icons/fa"
+import Edit from "./Edit";
 
 function Home() {
     const [todo, setTodo] = useState([]);
+    const [showEditForm, setShowEditForm] = useState(false)
     const date = new Date().toDateString()
     const fetchTodo = async (e) => {
         if (e) e.preventDefault();
@@ -24,6 +26,10 @@ function Home() {
         console.log(todos);
 
     }, [])
+
+    const handleDelete = async (id) => {
+        
+    }
 
     return (
 
@@ -49,13 +55,20 @@ function Home() {
                     {/* All items */}
                     <div>
                         {todo.map((tod) => (
-                            <div className="flex justify-between items-center m-2 bg-gray-400/20 rounded-md py-1 px-2">
-                                <div>
-                                    <div className="text-medium font-medium">{tod.name}</div>
-                                    <div className="text-sm text-gray-500">{tod.status}</div>
+                            <div className={`flex justify-between items-center m-2 bg-gray-400/20 rounded-md py-1 px-2 `}>
+                                <div >
+                                    <div className="text-medium font-medium">{tod.description}</div>
+                                    <div className="flex gap-4">
+                                        <div className="text-sm text-gray-500 text-xs">{tod.time}</div>
+                                        <div className="text-sm text-gray-500 text-xs">{tod.date}</div>
+                                    </div>
+                                    <div className="flex gap-4">
+                                    <div className="text-sm text-gray-500">{tod.category}</div>
+                                    <div className="text-red-500 text-sm">{tod.important === "yes" ? "important"  : "" }</div>
+                                    </div>
                                 </div>
                                 <div className="flex text-md gap-2">
-                                    <FaEdit className="text-blue-500" />
+                                    <FaEdit className="text-blue-500" onClick={() => setShowEditForm(true)} />
                                     <FaTrash className="text-red-500" />
                                 </div>
                             </div>
@@ -63,6 +76,7 @@ function Home() {
                     </div>
                 </div>
             </div>
+            {showEditForm && (<Edit onClose={() => setShowEditForm(false)} />)}
         </div>
     );
 }
