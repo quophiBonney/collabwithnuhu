@@ -1,18 +1,23 @@
 import mongoose from "mongoose";
 
 const todoSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-  },
   description: {
     type: String,
     required: true,
   },
-  status: {
+  category: {
     type: String,
-    enum: ["completed", "in-progress", "not-started"],
-    default: "not-started",
+  },
+  time: {
+    type: String,
+  },
+  date: {
+    type: String,
+  },
+  important: {
+    type: String,
+    enum: ["yes", "no"],
+    default: "no",
   },
 });
 

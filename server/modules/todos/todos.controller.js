@@ -2,8 +2,8 @@ import todosModel from "./todo.model.js";
 
 export const createTodo = async (req, res) => {
   try {
-    const { name, description, status } = req.body;
-    if (!name || !description) {
+    const { description, category, time, date, important } = req.body;
+    if (!description || !category || !time || !date) {
       return res.status(401).json({ message: "All fields are requred" });
     }
     const duplicateTodo = await todosModel.findOne({ description });
@@ -11,9 +11,11 @@ export const createTodo = async (req, res) => {
       return res.status(403).json({ message: "Todo already exist" });
     }
     const newTodo = {
-      name,
       description,
-      status,
+      category,
+      time,
+      date,
+      important,
     };
     const saveTodo = await todosModel.create(newTodo);
     if (saveTodo) {
