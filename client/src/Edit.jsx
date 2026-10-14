@@ -59,8 +59,6 @@ const Edit = ({ onClose }) => {
                     <input type="date" value={todo.date} name="date" onChange={handleChange} className="w-full p-1 mb-3 outline-none ring ring-gray-300 rounded-md" />
                     {/* time */}
                     <input type="time" value={todo.time} name="time" onChange={handleChange} className="w-full p-1 mb-3 outline-none ring ring-gray-300 rounded-md" />
-                    {/* important */}
-                    <div className="flex justify-between w-full border border-gray-300 p-1 rounded-md mb-3"><div>Important</div> <input type="checkbox" name="important" checked={isImportant === "yes"} onChange={(e) => setIsImportant(e.target.checked ? "yes" : "no")} id="" /></div>
 
                     {/* Action Buttons */}
                     <div className='flex justify-end gap-3 mt-2'>

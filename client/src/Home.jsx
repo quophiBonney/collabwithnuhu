@@ -28,7 +28,15 @@ function Home() {
     }, [])
 
     const handleDelete = async (id) => {
-        
+        try {
+            const res = await axios.delete(`http://localhost:5000/api/v1/todo/${id}`)
+            setSuccess(res.data.message || "Todo deleted successfully");
+        } catch (error) {
+            console.log(error);
+            setError(
+      error.response?.data?.message || "Failed to delete todo"
+    );
+        }
     }
 
     return (
