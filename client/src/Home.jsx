@@ -12,6 +12,7 @@ function Home() {
     const [showEditForm, setShowEditForm] = useState(false)
     const date = new Date().toDateString()
     const navigate = useNavigate()
+    const [searchTerm, setSearchTerm] = useState("")
     const fetchTodo = async (e) => {
         if (e) e.preventDefault();
         try {
@@ -41,6 +42,9 @@ function Home() {
         }
     }
 
+    const filterdTodo = todo.filter((tod) => 
+        tod.description?.toLowerCase().includes(searchTerm.toLowerCase())
+    )
     return (
 
         <div className="">
@@ -59,13 +63,13 @@ function Home() {
                             {/* <p className="font-medium text-sm ">Add a new item...</p>
                             <p className="text-sm">Date and time</p>
                             <p className="text-sm">Category</p> */}
-                            <input type="text"  className="border border-gray-300 rounded-md outline-none pl-2 focus:border-blue-400" />
+                            <input type="text" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} placeholder="Search todo ..."  className="border border-gray-300 rounded-md outline-none pl-2 focus:border-blue-400" />
                         </div>
                         <a href="/form" className="mr-4"><FaPlusSquare className="text-xl text-white bg-gray-600" /></a>
                     </div>
                     {/* All items */}
                     <div className="flex-1 overflow-y-auto min-h-0 px-1 pb-4">
-                        {todo.map((tod) => (
+                        {filterdTodo.map((tod) => (
                             <div key={tod._id} className={`flex justify-between items-center m-2 shadow-[0_0_0px_1px_rgba(0,0,0,0.1)] rounded-md py-1 px-2 `}>
                                 <div >
                                     <div className="text-medium font-medium">{tod.description}</div>
