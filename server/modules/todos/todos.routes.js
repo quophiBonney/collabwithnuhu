@@ -9,6 +9,6 @@ const router = express.Router();
 
 router.post("/todo", createTodo);
 router.get("/todo", getAllTodos);
-router.put("/todo", updateTodo);
-router.delete("/todo", deleteTodo);
+router.put("/todo/:id", updateTodo);
+router.delete("/todo/:id", deleteTodo);
 export default router;
