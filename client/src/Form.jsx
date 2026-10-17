@@ -43,7 +43,7 @@ function Form({ onClose }) {
   return (
     <div className="md:flex md:flex-col md:justify-center items-center min-h-screen">
       {/* contianer */}
-      <div className="w-full md:w-72 p-0 min-h-screen md:min-h-0 bg-gray-200 w-64">
+      <div className="w-full md:w-72 p-0 min-h-screen md:min-h-0 rounded-sm shadow-[0px_0px_1px_0px] w-64">
         <div className="bg-blue-800 text-white pt-6 h-42 md:h-36 rounded-b-[150px]">
         <div className="flex justify-between px-6 text-xl md:text-2xl">
           <FaBars />
@@ -57,9 +57,9 @@ function Form({ onClose }) {
           {error && (<p className="text-red-600 p-2 bg-red-200 rounded-md w-full mb-2 text-center">{error}</p>)}
           {success && (<p className="text-green-600 p-2 bg-green-200 rounded-md w-full mb-2 text-center">{success}</p>)}
           {/* description */}
-          <textarea type="text" name="description" value={todo.description} onChange={handleChange} placeholder="Add a description..." className="w-full h-14 p-1 mb-3 outline-none ring ring-gray-300 focus:ring-blue-500 rounded-md" />
+          <textarea type="text" name="description" value={todo.description} onChange={handleChange} placeholder="Add a description..." className="w-full h-14 p-2 mb-3 outline-none ring ring-gray-300 focus:ring-blue-500 rounded-md" />
           {/* category */}
-          <div className="">Select a category</div>
+          <div className="items-left ">Select a category</div>
           <select name="category" value={todo.category} onChange={handleChange} id="" className="w-full p-1 mb-3 outline-none ring ring-gray-300 rounded-md" >
             <option value="all">All</option>
             <option value="home">Home</option>
@@ -75,6 +75,7 @@ function Form({ onClose }) {
           <div className="flex justify-between w-full border border-gray-300 p-1 rounded-md mb-3"><div>Important</div> <input type="checkbox" name="important" checked={isImportant === "yes"} onChange={(e) => setIsImportant(e.target.checked ? "yes" : "no")} id="" /></div>
 
           <button className="bg-blue-800 w-24 p-2 rounded-full text-white">Done</button>
+          <div className="text-sm cursor-pointer bg-blue-500 p-1 rounded-md mt-2 text-white" onClick={() => navigate('/form')}>All todos</div>
         </form>
       </div>
       </div>

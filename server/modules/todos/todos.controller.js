@@ -41,35 +41,45 @@ export const updateTodo = async (req, res) => {
   try {
     const { name, description, status } = req.body;
     const { id } = req.params;
-    const todoExist = await todosModel({ id });
 
-    if (todoExist) {
-      await todosModel.findOneAndUpdate({ id });
-      const newRecord = {
-        name: name,
-        description: description,
-        status: status,
-      };
-      await todosModel.save(newRecord);
-      return res.status(201).json({ message: "Todo updated successfully" });
-    } else {
-      return res.status(501).json({ message: "Interanl server error" });
+    if (!description && !status && !name) {
+      return res
+        .status(401)
+        .json({ message: "At least one field is required" });
     }
-  } catch (err) {
-    console.log("Error message:", err);
+
+    const todoExist = await todosModel.findById(id);
+    if (!todoExist) {
+      return res.status(404).json({ message: "Todo not found" });
+    }
+
+    const updatedTodo = await todosModel.findByIdAndUpdate(
+      id,
+      { name, description, status },
+      { new: true, runValidators: true },
+    );
+
+    return res
+      .status(200)
+      .json({ message: "Todo updated successfully", data: updatedTodo });
+  } catch (error) {
+    console.log("Error message:", error);
+    return res.status(500).json({ message: "Internal server error" });
   }
 };
 
 export const deleteTodo = async (req, res) => {
   try {
     const { id } = req.params;
-    const todoData = await todosModel.findOneAndDelete({ id });
-    if (todoData) {
-      return res.status(200).json({ message: "Todo deleted" });
-    } else {
-      return res.status(501).json({ message: "Internal server error" });
+    const todoData = await todosModel.findByIdAndDelete(id);
+
+    if (!todoData) {
+      return res.status(404).json({ message: "Todo not found" });
     }
-  } catch (err) {
-    console.log("Error message:", err);
+
+    return res.status(200).json({ message: "Todo deleted successfully" });
+  } catch (error) {
+    console.log("Error message:", error);
+    return res.status(500).json({ message: "Internal server error" });
   }
 };
