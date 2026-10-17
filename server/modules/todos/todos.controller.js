@@ -39,10 +39,10 @@ export const getAllTodos = async (req, res) => {
 
 export const updateTodo = async (req, res) => {
   try {
-    const { name, description, status } = req.body;
+    const { description, date, time, category, important } = req.body;
     const { id } = req.params;
 
-    if (!description && !status && !name) {
+    if (!description || !category || !time || !date) {
       return res
         .status(401)
         .json({ message: "At least one field is required" });
@@ -55,7 +55,7 @@ export const updateTodo = async (req, res) => {
 
     const updatedTodo = await todosModel.findByIdAndUpdate(
       id,
-      { name, description, status },
+      { description, category, date, time, important },
       { new: true, runValidators: true },
     );
 
