@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useState } from "react"
 
 const Edit = ({ onClose }) => {
@@ -13,17 +12,6 @@ const Edit = ({ onClose }) => {
                 [name]: value
             }
         ))
-    }
-
-    const handleUpdate = async (e) => {
-        e.preventDefault()
-        try {
-            const res = await axios.put("http://localhost:5000/api/v1/todo", todo)
-            console.log(res.data)
-        } catch (error) {
-            console.log("error : ", error)
-        }
-
     }
     return (
         // 1. Full-screen backdrop overlay
@@ -47,7 +35,7 @@ const Edit = ({ onClose }) => {
                 </h2>
 
                 {/* 5. Form */}
-                <form action="" onSubmit={handleUpdate} className='flex flex-col gap-4'>
+                <form action="" onSubmit={(e) => e.preventDefault()} className='flex flex-col gap-4'>
                     <div>
                         <label className='block text-sm font-medium text-gray-600 mb-1'>
                             Description
@@ -71,6 +59,8 @@ const Edit = ({ onClose }) => {
                     <input type="date" value={todo.date} name="date" onChange={handleChange} className="w-full p-1 mb-3 outline-none ring ring-gray-300 rounded-md" />
                     {/* time */}
                     <input type="time" value={todo.time} name="time" onChange={handleChange} className="w-full p-1 mb-3 outline-none ring ring-gray-300 rounded-md" />
+                    {/* important */}
+                    <div className="flex justify-between w-full border border-gray-300 p-1 rounded-md mb-3"><div>Important</div> <input type="checkbox" name="important" checked={isImportant === "yes"} onChange={(e) => setIsImportant(e.target.checked ? "yes" : "no")} id="" /></div>
 
                     {/* Action Buttons */}
                     <div className='flex justify-end gap-3 mt-2'>
