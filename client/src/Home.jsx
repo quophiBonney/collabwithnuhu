@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import Form from "./Form"
 import "./App.css";
 import { todos } from "./data";
 import { FaEdit, FaTrash, FaPlusSquare, FaBars, FaLessThan } from "react-icons/fa"
@@ -10,6 +9,8 @@ import { useNavigate } from "react-router-dom";
 function Home() {
     const [todo, setTodo] = useState([]);
     const [showEditForm, setShowEditForm] = useState(false)
+    const [error, setError] = useState("")
+    const [success, setSuccess] = useState("")
     const date = new Date().toDateString()
     const navigate = useNavigate()
     const [searchTerm, setSearchTerm] = useState("")
@@ -17,7 +18,6 @@ function Home() {
         if (e) e.preventDefault();
         try {
             const res = await axios.get("http://localhost:5000/api/v1/todo");
-            console.log(res.data.data);
             setTodo(res.data.data)
         } catch (error) {
             console.log("Error:", error);
@@ -34,6 +34,9 @@ function Home() {
         try {
             const res = await axios.delete(`http://localhost:5000/api/v1/todo/${id}`)
             setSuccess(res.data.message || "Todo deleted successfully");
+            setTimeout(() => {
+                window.location.reload()
+            }, 3000);
         } catch (error) {
             console.log(error);
             setError(
@@ -42,7 +45,7 @@ function Home() {
         }
     }
 
-    const filterdTodo = todo.filter((tod) => 
+    const filterdTodo = todo.filter((tod) =>
         tod.description?.toLowerCase().includes(searchTerm.toLowerCase())
     )
     return (
@@ -63,12 +66,18 @@ function Home() {
                             {/* <p className="font-medium text-sm ">Add a new item...</p>
                             <p className="text-sm">Date and time</p>
                             <p className="text-sm">Category</p> */}
-                            <input type="text" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} placeholder="Search todo ..."  className="border border-gray-300 rounded-md outline-none pl-2 focus:border-blue-400" />
+                            <input type="text" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} placeholder="Search todo ..." className="border border-gray-300 rounded-md outline-none pl-2 focus:border-blue-400" />
                         </div>
                         <a href="/form" className="mr-4"><FaPlusSquare className="text-xl text-white bg-gray-600" /></a>
                     </div>
                     {/* All items */}
                     <div className="flex-1 overflow-y-auto min-h-0 px-1 pb-4">
+                        {error && (
+                            <p className="text-red-500">{error}</p>
+                        )}
+                        {success && (
+                            <p className="text-green-500">{success}</p>
+                        )}
                         {filterdTodo.map((tod) => (
                             <div key={tod._id} className={`flex justify-between items-center m-2 shadow-[0_0_0px_1px_rgba(0,0,0,0.1)] rounded-md py-1 px-2 `}>
                                 <div >
@@ -84,7 +93,7 @@ function Home() {
                                 </div>
                                 <div className="flex text-md gap-2">
                                     <FaEdit className="text-blue-500" onClick={() => setShowEditForm(true)} />
-                                    <FaTrash className="text-red-500" />
+                                    <FaTrash className="text-red-500" onClick={() => handleDelete(tod._id)} />
                                 </div>
                             </div>
                         ))}

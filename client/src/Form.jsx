@@ -30,7 +30,7 @@ function Form({ onClose }) {
       
       setTimeout(() => {
         setSuccess("")
-        navigate("/")
+        window.location.reload()
       }, 3000);
     } catch (error) {
       console.log("Error:", error);
