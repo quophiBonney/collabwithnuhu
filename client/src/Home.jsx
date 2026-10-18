@@ -42,7 +42,7 @@ function Home() {
         }
     }
 
-    const filterdTodo = todo.filter((tod) =>
+    const filterdTodo = todo.toReversed().filter((tod) =>
         tod.description?.toLowerCase().includes(searchTerm.toLowerCase())
     )
     return (
@@ -62,7 +62,7 @@ function Home() {
                         </div>
                     </div>
                     {/* All items */}
-                    <div className="flex-1 overflow-y-auto min-h-0 px-2">
+                    <div className="flex-1 overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] min-h-0 px-2">
                         {error && (
                             <p className="text-red-500">{error}</p>
                         )}
